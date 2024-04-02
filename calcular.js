@@ -1,3 +1,4 @@
+
 //--- ARREGLO PARA IMPRIMIR EN PANTALLA LOS PRODUCTOS
     let listaProductos = ['Papas de pollo',
                         'Papas de limon',
