@@ -1,78 +1,92 @@
-//----- ARRAY DE PRODUCTOS ----
+//------- VARIABLES GENERALES
+const btnSeleccion = document.querySelector(`#btnSeleccion`);
+let producto = 0;
+let cantidadProducto = 0;
+let valorProducto = 0;
+const iva = 0.19;
+const iup = 0.15;
+const listaProducto =[
+  {
+    codigo: 1,
+    nombreProducto: 'papas de pollo',
+    presentacion: '130gr',
+    precio: 2000
+  },
+  {
+    codigo: 2,
+    nombreProducto: 'papas de limón',
+    presentacion: '140gr',
+    precio: 2200
+  },
+  {
+    codigo: 3,
+    nombreProducto: 'papas de mayonesa',
+    presentacion: '140gr',
+    precio: 2200
+  },
+  {
+    codigo: 4,
+    nombreProducto: 'panecillos',
+    presentacion: '10gr',
+    precio: 2300
+  },
+  {
+    codigo: 5,
+    nombreProducto: 'chetos de queso',
+    presentacion: '130gr',
+    precio: 2000
+  }
+];
+
+//----- REGISTRO DE PRODUCTOS ----
 const BtnregistroProducto = document.querySelector('#BtnregistroProducto'); 
 //Esta es la declaración del array al cual estoy haciendo el push
-const listaProducto =[];
-
 BtnregistroProducto.addEventListener('click',()=>{
+  regProducto();
+});
+
+function regProducto(){
+  
   let codigo = 0;
   let nombreProducto;
   let presentacion;
   let precio;
-  
-  //Este do while lo uso para tomar los datos del usuario a traves de los promt
+  // Este do while lo uso para tomar los datos del usuario a traves de los promt
   do {
     codigo++
     nombreProducto = prompt('ingrese el nombre del producto. Para terminar escriba (salir)').toLowerCase().trim();
-    if (nombreProducto != 'salir') {
+    if (nombreProducto !== "salir") {
       presentacion = prompt('ingrese la presentacion del producto.').toLowerCase().trim();
-      precio = prompt('ingrese el precio del producto.').toLowerCase().trim();
+      precio = parseInt(prompt('ingrese el precio del producto.'));
     }else{
-      break;
-    }    
-    // el objeto donde almaceno los datos de los promt  
+      break
+    }
+      
     let registroProducto = {
       codigo,
       nombreProducto, 
       presentacion,
       precio
     }
+    
     //lugar donde realizo el push para empujar el objeto hacia el arreglo
     listaProducto.push(registroProducto);
-    
-    //Una impresion de prueba para saber si el arreglo tiene el objeto
-    console.log('******');
-    console.log(listaProducto);
-    console.log('******');
-    //Uso este return que tengo entendido que asi puedo usar este arreglo por fuera de este bloque de codigo.
-    return listaProducto;
-  } while (nombreProducto != 'salir');
+  } while (nombreProducto !== "salir");
   
-});
-
-//Intento manipular el arreglo e imprimir solo el valor del nombre del producto,hasta acá no logro entender porque no estoy capturando el arreglo.
-let prod;
-for(let producto of listaProducto){
-  prod = producto.nombreProducto;
-  console.log(prod);
 }
 
-//--- ARREGLO PARA IMPRIMIR EN PANTALLA LOS PRODUCTOS
-    // let listaProductos = ['Papas de pollo',
-    //                     'Papas de limon',
-    //                     'Papas de mayonesa',
-    //                     'Panecillos 10gr',
-    //                     'chetos de queso',
-    //                     'Coca-Cola 350ml',
-    //                     'Pepsi 350ml',
-    //                     'AguaSabor 350ml',
-    //                     'Colombiana 350ml',
-    //                     'Manzana 350ml'
-    //                     ];
-      
-
-
-  for (let i = 0; i < listaProducto.length; i++) {
-
-    console.log(listaProducto[i].codigo);
-    console.log(listaProducto[i].nombreProducto);
-
-    const newElement = document.createElement('li');
-    newElement.textContent = listaProducto[i]; 
-    document.querySelector('#lista').appendChild(newElement);
-
+//--- Impresion de los productos en el DOM
+listaProducto.forEach((item) =>{
   
-  }
-
+  const newElement = document.createElement('article');
+  newElement.innerHTML = ` 
+    <p><b>Codigo: </b><label>${item.codigo}</label></p>
+    <p><b>Producto: </b><label>${item.nombreProducto}</label></p>
+    <p><b>Presentación: </b><label>${item.presentacion}</label></p>
+    <p><b>Precio: </b><label>$ ${item.precio}</label></p>
+    <br> `
+  document.querySelector('#lista').appendChild(newElement);
+})
 
 
 //--- FUNCION PARA CALCULAR EL COBRO E IMPRESION FACTURA
@@ -84,79 +98,36 @@ function imprimirFactura(valorProducto){
   let total = subTotal + ivaProducto + impuestoProducto;
   
 
-  console.log(`
-  Producto seleccionado: ${listaProductos[1]}
-  Cantidad producto solicitado: ${cantidadProducto}
-  Valor producto Und: $${valorProducto}
-  Subtotal: ${subTotal}
-  Valor IVA(${iva * 100})%: ${ivaProducto}
-  Valor IUP(${iup * 100})%: ${impuestoProducto}
-  Total: ${total}  `);
+    console.log(`
+    Producto seleccionado: ${listaProducto[producto-1].nombreProducto}
+    Cantidad producto solicitado: ${cantidadProducto}
+    Valor producto Und: $${valorProducto}
+    Subtotal: ${subTotal}
+    Valor IVA(${iva * 100})%: ${ivaProducto}
+    Valor IUP(${iup * 100})%: ${impuestoProducto}
+    Total: ${total}`);
+
   
 }
 
-//------- VARIABLES GENERALES
-const btnSeleccion = document.querySelector(`#btnSeleccion`);
-let producto = 0;
-let cantidadProducto = 0;
-let valorProducto = 0;
-const iva = 0.19;
-const iup = 0.15;
+
 
 // --- FUNCION PARA SOLICITAR DATOS AL USUARIO Y MOSTRAR EN PANTALLA LA COMPRA
 btnSeleccion.addEventListener("click", () =>{
   
   do {
-    producto = parseInt(prompt(`ingrese el numero del producto`));
-    cantidadProducto = parseInt(prompt(`ingrese la cantidad de producto`));
-
+    producto = parseInt(prompt(`ingrese el codigo del producto`));//1
+    cantidadProducto = parseInt(prompt(`ingrese la cantidad de producto`));//2
+    if(isNaN(producto)){
+      alert('El numero ingresado no corresponde a los codigos de producto disponibles');
+    }
   } while (isNaN(producto));
 
-
-  if (producto == 1) {
-      valorProducto = 2000;
-      imprimirFactura(valorProducto);
-  }
-  else if (producto == 2) {
-    valorProducto = 2100;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 3) {
-    valorProducto = 2200;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 4) {
-    valorProducto = 2000;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 5) {
-    valorProducto = 2400;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 6) {
-    valorProducto = 2500;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 7) {
-    valorProducto = 2400;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 8) {
-    valorProducto = 2600;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 9) {
-    valorProducto = 2600;
-    imprimirFactura(valorProducto);
-  }
-  else if (producto == 10) {
-    valorProducto = 2600;
-    imprimirFactura(valorProducto);
-  }
-  else {
-    console.log('Esta no es una opcion - producto no existe');
-  }
   
+  if(producto == listaProducto[producto-1].codigo){
+    valorProducto = listaProducto[producto-1].precio;
+    imprimirFactura(valorProducto);
+  }
 
 });
 
