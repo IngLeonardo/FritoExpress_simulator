@@ -5,88 +5,76 @@ let cantidadProducto = 0;
 let valorProducto = 0;
 const iva = 0.19;
 const iup = 0.15;
-const listaProducto =[
-  {
-    codigo: 1,
-    nombreProducto: 'papas de pollo',
-    presentacion: '130gr',
-    precio: 2000
-  },
-  {
-    codigo: 2,
-    nombreProducto: 'papas de limón',
-    presentacion: '140gr',
-    precio: 2200
-  },
-  {
-    codigo: 3,
-    nombreProducto: 'papas de mayonesa',
-    presentacion: '140gr',
-    precio: 2200
-  },
-  {
-    codigo: 4,
-    nombreProducto: 'panecillos',
-    presentacion: '10gr',
-    precio: 2300
-  },
-  {
-    codigo: 5,
-    nombreProducto: 'chetos de queso',
-    presentacion: '130gr',
-    precio: 2000
-  }
-];
+const listaProducto =[];
 
-//----- REGISTRO DE PRODUCTOS ----
-const BtnregistroProducto = document.querySelector('#BtnregistroProducto'); 
-//Esta es la declaración del array al cual estoy haciendo el push
-BtnregistroProducto.addEventListener('click',()=>{
-  regProducto();
-});
 
+//FUNCION PARA REGISTRAR LOS PRODUCTOS
 function regProducto(){
-  
   let codigo = 0;
   let nombreProducto;
   let presentacion;
   let precio;
   // Este do while lo uso para tomar los datos del usuario a traves de los promt
   do {
-    codigo++
+    
     nombreProducto = prompt('ingrese el nombre del producto. Para terminar escriba (salir)').toLowerCase().trim();
     if (nombreProducto !== "salir") {
+      codigo = parseInt(prompt('ingrese el codigo del producto.'));
       presentacion = prompt('ingrese la presentacion del producto.').toLowerCase().trim();
       precio = parseInt(prompt('ingrese el precio del producto.'));
     }else{
       break
     }
-      
+    
     let registroProducto = {
       codigo,
       nombreProducto, 
       presentacion,
-      precio
+      precio  
     }
-    
     //lugar donde realizo el push para empujar el objeto hacia el arreglo
     listaProducto.push(registroProducto);
+    impresionDOM();
   } while (nombreProducto !== "salir");
-  
+  //--------------------------------------
+
 }
 
-//--- Impresion de los productos en el DOM
-listaProducto.forEach((item) =>{
+//----- EVENTO DEL BOTON REGISTRAR PRODUCTOS ----
+const BtnregistroProducto = document.querySelector('#BtnregistroProducto'); 
+//Esta es la declaración del array al cual estoy haciendo el push
+BtnregistroProducto.addEventListener('click',()=>{
+  regProducto();
+});
+
+//----- EVENTO DEL BOTON ELIMINAR PRODUCTO -----
+const BtnEliminaProducto = document.querySelector('#BtnEliminaProducto');
+BtnEliminaProducto.addEventListener("click", ()=>{
+
+      listaProducto.pop(); // El segundo parámetro 1 indica que solo se eliminará un elemento
+      const contenedor = document.getElementById('lista');
+      while (contenedor.firstChild) {
+      contenedor.removeChild(contenedor.firstChild); // Eliminar todos los hijos del contenedor
+      }
+      impresionDOM();
   
+});
+
+//--- IMPRESION DE LOS PRODUCTOS EN EL DOM
+let impresionDOM = () =>{
   const newElement = document.createElement('article');
-  newElement.innerHTML = ` 
-    <p><b>Codigo: </b><label>${item.codigo}</label></p>
-    <p><b>Producto: </b><label>${item.nombreProducto}</label></p>
-    <p><b>Presentación: </b><label>${item.presentacion}</label></p>
-    <p><b>Precio: </b><label>$ ${item.precio}</label></p>
-    <br> `
-  document.querySelector('#lista').appendChild(newElement);
-})
+  listaProducto.forEach((item) =>{
+    
+    newElement.innerHTML = ` 
+      <p><b>Codigo: </b><label>${item.codigo}</label></p>
+      <p><b>Producto: </b><label>${item.nombreProducto}</label></p>
+      <p><b>Presentación: </b><label>${item.presentacion}</label></p>
+      <p><b>Precio: </b><label>$ ${item.precio}</label></p>
+      <br> `
+    document.querySelector('#lista').appendChild(newElement);
+  })
+
+};
 
 
 //--- FUNCION PARA CALCULAR EL COBRO E IMPRESION FACTURA
@@ -110,9 +98,7 @@ function imprimirFactura(valorProducto){
   
 }
 
-
-
-// --- FUNCION PARA SOLICITAR DATOS AL USUARIO Y MOSTRAR EN PANTALLA LA COMPRA
+// --- FUNCION PARA SOLICITAR DATOS AL USUARIO DEL PRODUCTO QUE DESEA CONSUMIR E INDICAR EL VALOR A PAGAR
 btnSeleccion.addEventListener("click", () =>{
   
   do {
