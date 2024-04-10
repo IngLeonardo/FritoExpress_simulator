@@ -34,7 +34,7 @@ function regProducto(){
     }
     //lugar donde realizo el push para empujar el objeto hacia el arreglo
     listaProducto.push(registroProducto);
-    impresionDOM();
+    impresionDOMRegistro();
   } while (nombreProducto !== "salir");
   //--------------------------------------
 
@@ -47,21 +47,38 @@ BtnregistroProducto.addEventListener('click',()=>{
   regProducto();
 });
 
+
+
 //----- EVENTO DEL BOTON ELIMINAR PRODUCTO -----
 const BtnEliminaProducto = document.querySelector('#BtnEliminaProducto');
 BtnEliminaProducto.addEventListener("click", ()=>{
 
-      listaProducto.pop(); // El segundo parámetro 1 indica que solo se eliminará un elemento
-      const contenedor = document.getElementById('lista');
-      while (contenedor.firstChild) {
-      contenedor.removeChild(contenedor.firstChild); // Eliminar todos los hijos del contenedor
-      }
-      impresionDOM();
-  
+  listaProducto.pop();//eliminar uno a uno los productos
+
+  let listaDOM = document.getElementById("lista");
+  listaDOM.innerHTML = '';
+  impresionDOMEliminar();
 });
 
-//--- IMPRESION DE LOS PRODUCTOS EN EL DOM
-let impresionDOM = () =>{
+
+
+
+//--- IMPRESION DE LOS PRODUCTOS EN EL DOM, DESPUES DE ELIMINAR ALGUNO
+let impresionDOMEliminar = () =>{
+  listaProducto.forEach((item) =>{
+    const newElement = document.createElement('article');
+    newElement.innerHTML = ` 
+      <p><b>Codigo: </b><label>${item.codigo}</label></p>
+      <p><b>Producto: </b><label>${item.nombreProducto}</label></p>
+      <p><b>Presentación: </b><label>${item.presentacion}</label></p>
+      <p><b>Precio: </b><label>$ ${item.precio}</label></p>
+      <br> `
+    document.querySelector('#lista').appendChild(newElement);
+  })
+}
+
+//--- IMPRESION DE LOS PRODUCTOS EN EL DOM -----
+let impresionDOMRegistro = () =>{
   const newElement = document.createElement('article');
   listaProducto.forEach((item) =>{
     
@@ -75,6 +92,57 @@ let impresionDOM = () =>{
   })
 
 };
+
+
+
+//--- FUNCIONALIDAD PRECIOS BAJOS ----------------
+
+  const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
+
+  const preciosBajos = document.querySelector('#preciosBajos');
+  preciosBajos.innerHTML= '';
+  const newArticle = document.createElement('article');
+
+  productosRebaja.forEach((item)=>{
+    newArticle.innerHTML = `
+    <h2>Productos de rebaja</h2>
+    <p><span>SALE: ${item.nombreProducto}<span></p>
+    <br> `
+    document.querySelector('#preciosBajos').appendChild(newArticle);
+}); 
+
+
+
+
+//--- FUNCIONALIDAD DEL BUSCADOR DE PRODUCTOS ----
+let BtnBuscar = document.querySelector('#BtnBuscar');
+
+BtnBuscar.addEventListener("click", ()=>{
+  const inputBusqueda = document.querySelector('#inputBusqueda');
+  const listaBusqueda = document.querySelector('#listaBusqueda');
+  let valorInput = inputBusqueda.value.toLowerCase();
+
+  listaBusqueda.innerHTML = '';
+
+  if (valorInput !== "" && valorInput !== null) {
+    const productoBuscado = listaProducto.filter((ele) => ele.nombreProducto.includes(valorInput));
+    const newArticle = document.createElement('article');
+    productoBuscado.forEach((item)=>{
+      newArticle.innerHTML = ` 
+      <h2>producto encontrado :</h2>
+      <p><b>Codigo: </b><label>${item.codigo}</label></p>
+      <p><b>Producto: </b><label>${item.nombreProducto}</label></p>
+      <p><b>Presentación: </b><label>${item.presentacion}</label></p>
+      <p><b>Precio: </b><label>$ ${item.precio}</label></p>
+      <br> `
+    document.querySelector('#listaBusqueda').appendChild(newArticle);
+    });
+} else {
+    alert("El campo esta vacio, ingrese el producto valido a buscar");
+}
+
+});
+
 
 
 //--- FUNCION PARA CALCULAR EL COBRO E IMPRESION FACTURA
