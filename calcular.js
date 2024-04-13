@@ -28,9 +28,9 @@ function regProducto(){
     
     let registroProducto = {
       codigo,
-      nombreProducto, 
+      nombreProducto,
       presentacion,
-      precio  
+      precio
     }
     //lugar donde realizo el push para empujar el objeto hacia el arreglo
     listaProducto.push(registroProducto);
@@ -59,8 +59,6 @@ BtnEliminaProducto.addEventListener("click", ()=>{
   listaDOM.innerHTML = '';
   impresionDOMEliminar();
 });
-
-
 
 
 //--- IMPRESION DE LOS PRODUCTOS EN EL DOM, DESPUES DE ELIMINAR ALGUNO
@@ -94,25 +92,33 @@ let impresionDOMRegistro = () =>{
 };
 
 
-
 //--- FUNCIONALIDAD PRECIOS BAJOS ----------------
+  const btnProductosDescuento = document.querySelector('#btnProductosDescuento');
+  btnProductosDescuento.addEventListener("click", ()=>{
 
-  const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
+    let preciosBajos = document.querySelector('#preciosBajos');
+    preciosBajos.innerHTML = '';
+    const productosRebaja = listaProducto.filter((ele) => ele.precio <= 5000);  
 
-  const preciosBajos = document.querySelector('#preciosBajos');
-  preciosBajos.innerHTML= '';
-  const newArticle = document.createElement('article');
+    if(productosRebaja.length == 0){
+      let newArticle = document.createElement('article');
+        newArticle.innerHTML = `
+        <p><span>No se encontraron productos en descuento..!<span></p>
+        <hr>`;
+        document.querySelector('#preciosBajos').appendChild(newArticle);
+    }
+    else{
+      productosRebaja.forEach((ele) => {
+        let newArticle = document.createElement('article');
+        newArticle.innerHTML = `
+        <p><span>Producto en descuento : ${ele.nombreProducto}<span></p>
+        <hr>`;
+        document.querySelector('#preciosBajos').appendChild(newArticle);
+      });
 
-  productosRebaja.forEach((item)=>{
-    newArticle.innerHTML = `
-    <h2>Productos de rebaja</h2>
-    <p><span>SALE: ${item.nombreProducto}<span></p>
-    <br> `
-    document.querySelector('#preciosBajos').appendChild(newArticle);
-}); 
+    }
 
-
-
+  });
 
 //--- FUNCIONALIDAD DEL BUSCADOR DE PRODUCTOS ----
 let BtnBuscar = document.querySelector('#BtnBuscar');
@@ -121,11 +127,12 @@ BtnBuscar.addEventListener("click", ()=>{
   const inputBusqueda = document.querySelector('#inputBusqueda');
   const listaBusqueda = document.querySelector('#listaBusqueda');
   let valorInput = inputBusqueda.value.toLowerCase();
-
   listaBusqueda.innerHTML = '';
 
   if (valorInput !== "" && valorInput !== null) {
+
     const productoBuscado = listaProducto.filter((ele) => ele.nombreProducto.includes(valorInput));
+    
     const newArticle = document.createElement('article');
     productoBuscado.forEach((item)=>{
       newArticle.innerHTML = ` 
@@ -142,8 +149,6 @@ BtnBuscar.addEventListener("click", ()=>{
 }
 
 });
-
-
 
 //--- FUNCION PARA CALCULAR EL COBRO E IMPRESION FACTURA
 function imprimirFactura(valorProducto){
