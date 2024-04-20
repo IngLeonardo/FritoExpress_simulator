@@ -97,7 +97,7 @@ let impresionDOMRegistro = () =>{
 
 //--- FUNCIONALIDAD PRECIOS BAJOS ----------------
 
-  const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
+const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
 
   const preciosBajos = document.querySelector('#preciosBajos');
   preciosBajos.innerHTML= '';
