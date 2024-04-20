@@ -47,8 +47,6 @@ BtnregistroProducto.addEventListener('click',()=>{
   regProducto();
 });
 
-
-
 //----- EVENTO DEL BOTON ELIMINAR PRODUCTO -----
 const BtnEliminaProducto = document.querySelector('#BtnEliminaProducto');
 BtnEliminaProducto.addEventListener("click", ()=>{
@@ -59,7 +57,6 @@ BtnEliminaProducto.addEventListener("click", ()=>{
   listaDOM.innerHTML = '';
   impresionDOMEliminar();
 });
-
 
 //--- IMPRESION DE LOS PRODUCTOS EN EL DOM, DESPUES DE ELIMINAR ALGUNO
 let impresionDOMEliminar = () =>{
@@ -88,27 +85,16 @@ let impresionDOMRegistro = () =>{
       <br> `
     document.querySelector('#lista').appendChild(newElement);
   })
-
 };
-
 
 //--- FUNCIONALIDAD PRECIOS BAJOS ----------------
   const btnProductosDescuento = document.querySelector('#btnProductosDescuento');
   btnProductosDescuento.addEventListener("click", ()=>{
 
-const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
-
+  const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
   const preciosBajos = document.querySelector('#preciosBajos');
   preciosBajos.innerHTML= '';
   const newArticle = document.createElement('article');
-
-  productosRebaja.forEach((item)=>{
-    newArticle.innerHTML = `
-    <h2>Productos de rebaja</h2>
-    <p><span>SALE: ${item.nombreProducto}<span></p>
-    <br> `
-    document.querySelector('#preciosBajos').appendChild(newArticle);
-}); 
 
     if(productosRebaja.length == 0){
       let newArticle = document.createElement('article');
@@ -125,9 +111,7 @@ const productosRebaja = listaProducto.filter((ele) => ele.precio < 5000);
         <hr>`;
         document.querySelector('#preciosBajos').appendChild(newArticle);
       });
-
     }
-
   });
 
 //--- FUNCIONALIDAD DEL BUSCADOR DE PRODUCTOS ----
@@ -142,7 +126,6 @@ BtnBuscar.addEventListener("click", ()=>{
   if (valorInput !== "" && valorInput !== null) {
 
     const productoBuscado = listaProducto.filter((ele) => ele.nombreProducto.includes(valorInput));
-    
     const newArticle = document.createElement('article');
     productoBuscado.forEach((item)=>{
       newArticle.innerHTML = ` 
@@ -154,10 +137,10 @@ BtnBuscar.addEventListener("click", ()=>{
       <br> `
     document.querySelector('#listaBusqueda').appendChild(newArticle);
     });
-} else {
+  }
+  else {
     alert("El campo esta vacio, ingrese el producto valido a buscar");
-}
-
+  }
 });
 
 //--- FUNCION PARA CALCULAR EL COBRO E IMPRESION FACTURA
@@ -168,7 +151,6 @@ function imprimirFactura(valorProducto){
   let impuestoProducto = subTotal * iup;
   let total = subTotal + ivaProducto + impuestoProducto;
   
-
     console.log(`
     Producto seleccionado: ${listaProducto[producto-1].nombreProducto}
     Cantidad producto solicitado: ${cantidadProducto}
@@ -176,9 +158,7 @@ function imprimirFactura(valorProducto){
     Subtotal: ${subTotal}
     Valor IVA(${iva * 100})%: ${ivaProducto}
     Valor IUP(${iup * 100})%: ${impuestoProducto}
-    Total: ${total}`);
-
-  
+    Total: ${total}`); 
 }
 
 // --- FUNCION PARA SOLICITAR DATOS AL USUARIO DEL PRODUCTO QUE DESEA CONSUMIR E INDICAR EL VALOR A PAGAR
@@ -192,18 +172,15 @@ btnSeleccion.addEventListener("click", () =>{
     }
   } while (isNaN(producto));
 
-  
   if(producto == listaProducto[producto-1].codigo){
     valorProducto = listaProducto[producto-1].precio;
     imprimirFactura(valorProducto);
   }
-
 });
 
 // --- FUNCION PARA BORRAR CONSOLA -----
 const btnClear = document.querySelector(`#btnClear`);
 btnClear.addEventListener("click", () =>{
-
   console.clear();
 });
 
