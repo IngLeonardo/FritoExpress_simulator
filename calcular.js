@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-
-//--- ARREGLO PARA IMPRIMIR EN PANTALLA LOS PRODUCTOS
-    let listaProductos = ['Papas de pollo',
-                        'Papas de limon',
-                        'Papas de mayonesa',
-                        'Panecillos 10gr',
-                        'chetos de queso',
-                        'Coca-Cola 350ml',
-                        'Pepsi 350ml',
-                        'AguaSabor 350ml',
-                        'Colombiana 350ml',
-                        'Manzana 350ml'
-                        ];
-                      
-  for (let i = 0; i < listaProductos.length; i++) {
-    
-    const newElement = document.createElement('li');
-    newElement.textContent = listaProductos[i]; 
-    document.querySelector('#lista').appendChild(newElement);
-  }
-=======
 //------- VARIABLES GENERALES
 const btnSeleccion = document.querySelector(`#btnSeleccion`);
 let producto = 0;
@@ -28,7 +6,6 @@ let valorProducto = 0;
 const iva = 0.19;
 const iup = 0.15;
 const listaProducto =[];
->>>>>>> entrega2
 
 
 //FUNCION PARA REGISTRAR LOS PRODUCTOS
