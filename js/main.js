@@ -43,11 +43,43 @@ const productos = [
   }
 ]
 
-const vitrinaProductos = document.querySelector('#vitrinaProductos');
-
+//--- Funcionalidad que me permite imprimir los productos ---
 productos.forEach((item)=>{
 
   const newElemento = document.createElement('div');
-  newElemento.crea
-
+  newElemento.id ="casilla__producto";
+  newElemento.innerHTML = `
+  <label class="cod__producto">${item.codigo}</label>  
+  <img src="${item.img}" alt="Imagen del producto" class="imgProducto">
+    `
+  document.querySelector('#vitrinaProductos').appendChild(newElemento);
+  
 })
+
+//--- Funcionalidad para el teclado numerico de seleccion del producto ---
+const btnsCodigo = document.querySelectorAll(".btnCodigo");
+
+btnsCodigo.forEach((boton) =>{
+  boton.addEventListener("click",() =>{
+
+    const valorBtn = boton.textContent;
+    const imgProdSeleccionado = document.querySelector(".imgProdSeleccionado");
+    imgProdSeleccionado.innerHTML = "";
+    
+    productos.forEach((item) => {
+      console.log(item.codigo)
+      if(valorBtn == item.codigo){
+
+        const newElement = document.createElement("figure");
+        newElement.classList = "figure__imgProdSeleccionado";
+        newElement.innerHTML = `
+        <img src="${item.img}" alt="Imagen del producto seleccionado" class="img__displayTop">
+        `
+        document.querySelector(".imgProdSeleccionado").appendChild(newElement)
+      }
+    });
+    
+
+
+  });
+});

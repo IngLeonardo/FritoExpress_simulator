@@ -53,7 +53,7 @@ body{
 .vitrinaProductos{
   display: flex;
   flex-wrap: wrap; 
-  gap: 4px;
+  gap: 6px;
   justify-content: center;
   align-items: center;
   background-color: var(--color-tercero);
@@ -74,14 +74,33 @@ body{
   
 }
 #casilla__producto{
+  position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   width: 4rem;
-  height: 10rem;
+  height: 9rem;
   background-color: var(--color-primero);
   flex-basis: 45%;
 
+}
+.imgProducto{
+  
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.cod__producto{
+  position:absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 99;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  background-color: var(--color-quinto);
+  color: var(--color-base);
 }
 
 .carrito{
@@ -115,11 +134,25 @@ body{
 .display__top{
   display: flex;
   width: 410px;
-  
   column-gap: 4px;
   align-items: center;
-  margin: 0 10px;
+  /* margin: 0 10px; */
   background-color: var(--color-tercero);
+}
+.imgProdSeleccionado{
+  width: 300px;
+  height: 190;
+}
+
+.figure__imgProdSeleccionado{
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+}
+.img__displayTop{
+  width: 150px;
+  height: 196px;
+  
 }
 .descripcion__producto{
   width: 400px;

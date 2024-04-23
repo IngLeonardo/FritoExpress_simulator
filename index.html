@@ -11,12 +11,7 @@
     <h1 class="titulo">FritoExpress</h1>
     <div class="contenedor__contenido">
       <section class="vitrinaProductos" id="vitrinaProductos">
-        <div id="casilla__producto">producto1</div>
-        <div id="casilla__producto">producto2</div>
-        <div id="casilla__producto">producto3</div>
-        <div id="casilla__producto">producto4</div>
-        <div id="casilla__producto">producto5</div>
-        <div id="casilla__producto">producto6</div>
+        <!-- Los <div> de esta section se crean dinamicamente con JS -->
       </section>
       <div class="contenedor__tablero">
         <section class="tablero">
@@ -26,7 +21,12 @@
           </div>
           <div class="display">
             <div class="display__top">
-              <img src="https://placehold.co/150x200" alt="">
+              <div class="imgProdSeleccionado">
+                <figure class="figure__imgProdSeleccionado">
+                  <img src="https://placehold.co/150x200" alt="" class="img__displayTop" />
+                </figure>
+                
+              </div>
               <div class="descripcion__producto">
                 <label for="">codigo</label>
                 <label for="">nombre</label>
@@ -36,17 +36,17 @@
               </div>
               <div class="contenedor__teclado">
                 <div class="display__teclado">
-                  <button id="tecla">1</button>
-                  <button id="tecla">2</button>
-                  <button id="tecla">3</button>
-                  <button id="tecla">4</button>
-                  <button id="tecla">5</button>
-                  <button id="tecla">6</button>
-                  <button id="tecla">7</button>
-                  <button id="tecla">8</button>
-                  <button id="tecla">9</button>
-                  <button id="tecla">0</button>
-                  <button id="tecla">OK</button>
+                  <button class="btnCodigo">1</button>
+                  <button class="btnCodigo">2</button>
+                  <button class="btnCodigo">3</button>
+                  <button class="btnCodigo">4</button>
+                  <button class="btnCodigo">5</button>
+                  <button class="btnCodigo">6</button>
+                  <button class="btnCodigo">7</button>
+                  <button class="btnCodigo">8</button>
+                  <button class="btnCodigo">9</button>
+                  <button class="btnCodigo">0</button>
+                  <button class="btnCodigo">OK</button>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
   
 
   <!-- Scripts JS -->
-  <script src="./js/calcular.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 </html>
 
