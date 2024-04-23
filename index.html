@@ -3,32 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/main.css">
   <title>FritoExpress</title>
 </head>
 <body>
-  <header>
-    <button id="BtnregistroProducto">Registrar producto</button>
-    <button id="BtnEliminaProducto">Eliminar producto</button>
-    <h1>Dispensador FritoExpress</h1>
-    <button id="btnProductosDescuento">Ver productos en descuento</button>
-    <div id="preciosBajos">
+  <main class="contenedor">
+    <h1 class="titulo">FritoExpress</h1>
+    <div class="contenedor__contenido">
+      <section class="vitrinaProductos" id="vitrinaProductos">
+        <div id="casilla__producto">producto1</div>
+        <div id="casilla__producto">producto2</div>
+        <div id="casilla__producto">producto3</div>
+        <div id="casilla__producto">producto4</div>
+        <div id="casilla__producto">producto5</div>
+        <div id="casilla__producto">producto6</div>
+      </section>
+      <div class="contenedor__tablero">
+        <section class="tablero">
+          <div class="buscador">
+            <button class="descuento">Ver descuentos</button>
+            <input type="text" class="inputtext"><button class="btnBuscar">Buscar</button>
+          </div>
+          <div class="display">
+            <div class="display__top">
+              <img src="https://placehold.co/150x200" alt="">
+              <div class="descripcion__producto">
+                <label for="">codigo</label>
+                <label for="">nombre</label>
+                <label for="">presentacion</label>
+                <label for="">precio</label>
+                <label for="">cantidad</label>
+              </div>
+              <div class="contenedor__teclado">
+                <div class="display__teclado">
+                  <button id="tecla">1</button>
+                  <button id="tecla">2</button>
+                  <button id="tecla">3</button>
+                  <button id="tecla">4</button>
+                  <button id="tecla">5</button>
+                  <button id="tecla">6</button>
+                  <button id="tecla">7</button>
+                  <button id="tecla">8</button>
+                  <button id="tecla">9</button>
+                  <button id="tecla">0</button>
+                  <button id="tecla">OK</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <div class="display___bottom">
+          <button class="controls">-</button>
+          <button class="controls">+</button>
+          <button class="controls">Agregar</button>
+        </div>
+        <section class="carrito">
+          <div class="carrito__cantidades">
+            <span>prod: </span>
+            <span>cant:</span>
+            <span>sub:</span> 
+            <span>total:</span>
+            <button>X</button>
+          </div>
+        </section>
+        <section class="sectionPago">
+          <button class="btnPago">Pagar</button>
+        </section>
+      </div>
     </div>
+    <section class="contenedor__despacho">
+      <div class="dispensadora">
+        <div class="manija__dispensador"></div>
+      </div>
     <div>
-      <input type="text" id="inputBusqueda" placeholder="Buscar producto por nombre">
-      <span id="BuscarPorPresentacion"></span>
-      <button id="BtnBuscar">Buscar</button>
+      <label for="">Vueltas</label>
+      <label for="">$00</label>
     </div>
-  </header>
-  <main>
-    <section id="listaBusqueda">
     </section>
-    <h2>Lista de productos:</h2>
-    <section id="lista">
-    </section>
-    <button id="btnSeleccion">Seleccionar producto</button>
-    <button id="btnClear">Finalizar compra</button>
   </main>
-  <script src="calcular.js"></script>
+  <footer>
+    <div class="left"></div>
+    <div class="right"></div>  
+  </footer>
+  
+  
+
+  <!-- Scripts JS -->
+  <script src="./js/calcular.js"></script>
 </body>
 </html>
 
