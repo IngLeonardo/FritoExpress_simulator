@@ -28,11 +28,7 @@
                 
               </div>
               <div class="descripcion__producto">
-                <label for="">codigo</label>
-                <label for="">nombre</label>
-                <label for="">presentacion</label>
-                <label for="">precio</label>
-                <label for="">cantidad</label>
+                <!-- Esta seccion se crea dinamicamente con JS -->
               </div>
               <div class="contenedor__teclado">
                 <div class="display__teclado">
@@ -45,18 +41,21 @@
                   <button class="btnCodigo">7</button>
                   <button class="btnCodigo">8</button>
                   <button class="btnCodigo">9</button>
-                  <button class="btnCodigo">0</button>
-                  <button class="btnCodigo">OK</button>
+                  <button class="btnCodigo">10</button>
+                  <button class="btnCodigo" id="agregar">
+                    Agregar
+                  </button>
+
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <div class="display___bottom">
-          <button class="controls">-</button>
-          <button class="controls">+</button>
-          <button class="controls">Agregar</button>
-        </div>
+        <!-- <div class="display___bottom">
+          <button class="controls" id="restarCant">-</button>
+          <button class="controls" id="aumentarCant">+</button>
+          <button class="controls" id="agregarProd">Agregar</button>
+        </div> -->
         <section class="carrito">
           <div class="carrito__cantidades">
             <span>prod: </span>
@@ -67,17 +66,24 @@
           </div>
         </section>
         <section class="sectionPago">
+          <button class="dinero">$5k</button>
+          <button class="dinero">$10k</button>
+          <button class="dinero">$20k</button>
           <button class="btnPago">Pagar</button>
         </section>
       </div>
     </div>
     <section class="contenedor__despacho">
       <div class="dispensadora">
-        <div class="manija__dispensador"></div>
+        <div class="tapa__dispensador">
+          <div class="manija__dispensador"></div>
+          <span class="titulo__retiro">Retire aquí</span>
+        </div>
+        
       </div>
-    <div>
-      <label for="">Vueltas</label>
-      <label for="">$00</label>
+    <div class="vueltas">
+      <label for="" class="tituloVueltas">Vueltas</label>
+      <label for="" class="valorVueltas">$00</label>
     </div>
     </section>
   </main>
