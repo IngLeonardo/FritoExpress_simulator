@@ -100,8 +100,9 @@ productos.forEach((item)=>{
 const btnsCodigo = document.querySelectorAll(".btnCodigo");
 
 btnsCodigo.forEach((boton) =>{
-  boton.addEventListener("click",() =>{
-    let cantidad;
+  // boton.addEventListener("click",() =>{
+  const seleccionarProducto = () =>{
+  
     const valorBtn = boton.textContent;
     const imgProdSeleccionado = document.querySelector(".imgProdSeleccionado");
     imgProdSeleccionado.innerHTML = "";
@@ -126,38 +127,66 @@ btnsCodigo.forEach((boton) =>{
                 <label for="" id="codigo">cod: ${item.codigo}</label>
                 <label for="" id="nombre">Prod : ${item.nombre}</label>
                 <label for="" id="presentacion">Pres : ${item.presentacion}</label>
-                <label for="" id="precio">Prec : $${item.precio}</label>
-                <label for="" id="cantidad">Cant : <span id="cantProducto">${cantidad = 1}</span></label>
+                <label for="" id="precio">Prec : $${item.precio}</label> 
               `
               document.querySelector(".descripcion__producto").appendChild(newElementoDescrip)
-          
-      }
-        // const codigo = document.querySelector("#codigo").textContent;
-        // const nombre = document.querySelector("#nombre").textContent;
-        // const presentacion = document.querySelector("#presentacion").textContent;
-        // const precio = documet.querySelector("#precio").textContent;
-        // const cantidad = document.querySelector("#cantidad").textContent;
-        
-      console.log(codigo);
-      // if(boton.id == "agregar"){
-        
-        
-      //   const agregarAlCarrito = {
-      //     codigo,
-      //     nombre,
-      //     presentacion,
-      //     precio,
-      //     cantidad
-      //   }
+              
+              boton.removeEventListener('click', seleccionarProducto);
+    
 
-      //   carrito.push(agregarAlCarrito);
-      // }
-    });
-  });
+              const codigo = item.codigo;
+              const nombre = item.nombre;
+              const presentacion = item.presentacion;
+              const precio = item.precio;
+              const cantidad = 0;
+              
+            const btnAgregar = document.querySelector("#agregar");
+            btnAgregar.addEventListener("click",() => {
+              const imgProdSeleccionado = document.querySelector(".imgProdSeleccionado");
+              imgProdSeleccionado.innerHTML = `
+                <figure class="figure__imgProdSeleccionado">
+                <img src="https://placehold.co/150x200" alt="" class="img__displayTop" />
+                </figure>
+              `;
+            
+              let agregarAlCarrito = {
+                    codigo,
+                    nombre,
+                    presentacion,
+                    precio,
+                    cantidad
+                  }
+              carrito.push(agregarAlCarrito);
+    // Estoy haciendo el push al arreglo carrito, pero debo ver los videos
+    // de carpi, se me repite un producto, cuando imprimo el carrito
+    //veo el producto repetido
+              console.log("codigo :",codigo);
+              console.log("nombre :",nombre);
+              console.log("presentacion :",presentacion);
+              console.log("precio :",precio);
+              console.log("cantidad :",cantidad,);
+              console.log(carrito);
+              
+            });
+            
+
+      }
+
+      
+
+      
+    }); 
+  };
+
+  boton.addEventListener("click",seleccionarProducto);
 });
 
 
-
+// const codigo = document.querySelector("#codigo").textContent;
+// const nombre = document.querySelector("#nombre").textContent;
+// const presentacion = document.querySelector("#presentacion").textContent;
+// const precio = documet.querySelector("#precio").textContent;
+// const cantidad = document.querySelector("#cantidad").textContent;
 
 
 
