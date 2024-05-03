@@ -70,6 +70,7 @@ body{
   width: 4px;
 }
 .contenedor__tablero{
+  padding-top: 1rem;
   width: 100%;
   background-color: var(--color-segundo);
   
@@ -221,18 +222,31 @@ label{
 .carrito__cantidades{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  gap: 10px;
+  gap: 1px;
   
   margin: 20px 10px;
-  padding: 0 15px;
-  background-color: #000000;
+  padding: 0 10px;
+  background-color: var(--color-primero);
   color: #D9D9D9;
-  font-weight: 700;
-
+  font-size: 16px;
+  font-weight: 300;
   height:40px;
 }
+.carrito__cantidades label{
+  color: var(--color-base);
+  
+}
+.carrito__cantidades span{
+  color: var(--color-quinto);
+  background-color: var(--color-cuarto);
+  padding: 3px;
+  border-radius: 6%;
+  font-size: 12px;
+  font-weight: 400;
+}
+
 .sectionPago{
   display: flex;
   flex-direction: row;

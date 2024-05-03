@@ -12,13 +12,14 @@
     <div class="contenedor__contenido">
       <section class="vitrinaProductos" id="vitrinaProductos">
         <!-- Los <div> de esta section se crean dinamicamente con JS -->
+        
       </section>
       <div class="contenedor__tablero">
         <section class="tablero">
-          <div class="buscador">
+          <!-- <div class="buscador">
             <button class="descuento">Ver descuentos</button>
             <input type="text" class="inputtext"><button class="btnBuscar">Buscar</button>
-          </div>
+          </div> -->
           <div class="display">
             <div class="display__top">
               <div class="imgProdSeleccionado">
@@ -42,25 +43,20 @@
                   <button class="btnCodigo">8</button>
                   <button class="btnCodigo">9</button>
                   <button class="btnCodigo">10</button>
-                  <button class="btnCodigo" id="agregar">
-                    Agregar
-                  </button>
+                  <button id="agregar">Agregar</button>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <!-- <div class="display___bottom">
-          <button class="controls" id="restarCant">-</button>
-          <button class="controls" id="aumentarCant">+</button>
-          <button class="controls" id="agregarProd">Agregar</button>
-        </div> -->
         <section class="carrito">
           <div class="carrito__cantidades">
-            <span>prod: </span>
-            <span>cant:</span>
-            <span>sub:</span> 
-            <span>total:</span>
+            <label>prod: <span id="producto"></span></label>
+            <label>cant: <span id="cantidad"></span></label>
+            <label>subt: <span id="subtotal"></span></label> 
+            <label>total:<span id="total"></span></label>
+            <button>-</button>
+            <button>+</button>
             <button>X</button>
           </div>
         </section>
