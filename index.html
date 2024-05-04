@@ -49,21 +49,25 @@
             </div>
           </div>
         </section>
-        <section class="carrito">
-          <div class="carrito__cantidades">
-            <label>prod: <span id="producto"></span></label>
-            <label>cant: <span id="cantidad"></span></label>
-            <label>subt: <span id="subtotal"></span></label> 
-            <label>total:<span id="total"></span></label>
-            <button>-</button>
-            <button>+</button>
-            <button>X</button>
+        <section class="container__carrito">
+          <h3 class="carrito__titulo">Carrito de compra</h3>
+          <div class="carrito">
+            <div class="carrito__producto" id="carrito-vacio">
+              <h4> Carrito esta vacío.🛒</h4>
+            </div>
+            <div class="carrito__productos vista-none" id="carrito__productos">
+              <!-- Esta seccion se genera dinamicamente con JS -->
+            </div>
+            <div class="carrito__total">
+              <h2>Total: <span id="total">$0</span></h2>
+            </div>
           </div>
         </section>
         <section class="sectionPago">
-          <button class="dinero">$5k</button>
           <button class="dinero">$10k</button>
           <button class="dinero">$20k</button>
+          <button class="dinero">$50k</button>
+          <button class="dinero">$100k</button>
           <button class="btnPago">Pagar</button>
         </section>
       </div>

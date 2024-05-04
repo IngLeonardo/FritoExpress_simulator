@@ -115,7 +115,7 @@ body{
   color: var(--color-base);
 }
 
-.carrito{
+.container__carrito{
   flex-basis: 100%;
 }
 .descuento{
@@ -218,33 +218,49 @@ label{
   height: 34px;
   font-size: 15px;
 }
+.carrito__titulo{
+  margin-top: 12px;
+  margin-bottom: 2px;
+  text-align: center;
+}
 
-.carrito__cantidades{
+.carrito__producto{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  gap: 1px;
+  gap: 0px;
   
-  margin: 20px 10px;
+  margin: 4px 10px;
   padding: 0 10px;
   background-color: var(--color-primero);
-  color: #D9D9D9;
+  color:var(--color-base);
   font-size: 16px;
   font-weight: 300;
   height:40px;
 }
-.carrito__cantidades label{
+#carrito-vacio{
+  background-color: var(--color-cuarto);
+  color: var(--color-primero);
+  font-weight: 200;
+}
+.carrito__producto label{
   color: var(--color-base);
   
 }
-.carrito__cantidades span{
+.carrito__producto span{
   color: var(--color-quinto);
   background-color: var(--color-cuarto);
   padding: 3px;
   border-radius: 6%;
   font-size: 12px;
   font-weight: 400;
+}
+.carrito__total{
+  text-align: center;
+}
+.vista-none{
+  display: none;
 }
 
 .sectionPago{

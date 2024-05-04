@@ -1,10 +1,16 @@
-const carrito = [];
+let carritoLS = JSON.parse(localStorage.getItem("carrito"));
+let carrito = carritoLS || [];
+
+const carritoVacio = document.querySelector("#carrito-vacio");
+const carritoProductos = document.querySelector("#carrito__productos");
+const carritoTotal =  document.querySelector("#total");
 const PRODUCTOS_URL = "../data/productos.json";
 const btnCodigo = document.querySelectorAll(".btnCodigo");
 const newElementoDescrip = document.createElement("div");
       newElementoDescrip.id= "detalle__producto";
       newElementoDescrip.className = "detalle__producto";
       newElementoDescrip.innerHTML = "";
+
 
 fetch(PRODUCTOS_URL)
   .then((respuesta) => respuesta.json())
@@ -17,7 +23,6 @@ fetch(PRODUCTOS_URL)
       // boton.addEventListener("click",()=>{
       const eventBtn = ()=>{
         const valorBtn = boton.textContent
-        console.log("valorBtn :",valorBtn)
         productos.forEach((producto)=>{
           
           if(valorBtn == producto.codigo){
@@ -34,13 +39,13 @@ fetch(PRODUCTOS_URL)
                   <label for="" id="precio">Prec : $${producto.precio}</label> 
                   `;
             document.querySelector(".descripcion__producto").appendChild(newElementoDescrip)
-
             //--- Funcionalidad del boton para agregar productos al carrito
             const btnAgregar = document.querySelector("#agregar");
                   //btnAgregar.addEventListener("click",()=>{
                   const btnAgregarCarrito = () =>{
-                      carrito.push({...producto, cantidad: 1});
-                      console.log(carrito);
+                      carrito.push({...producto , cantidad: 1});
+                      actualizarCarrito();
+                      
                     btnAgregar.removeEventListener('click', btnAgregarCarrito);
                   }
 
@@ -50,12 +55,96 @@ fetch(PRODUCTOS_URL)
         
         boton.removeEventListener('click', eventBtn);
       }//fin del evento del boton
+
       boton.addEventListener('click', eventBtn);
     })//fin forEach del boton    
       
   }) //fin del fetch
   
+//--- Funcionalidad actualizar el carrito ----
+function actualizarCarrito(){
+  if(carrito.length === 0){  
+    carritoVacio.classList.remove("vista-none");
+    carritoProductos.classList.add("vista-none");
+  }
+  else{
+    carritoVacio.classList.add("vista-none");
+    carritoProductos.classList.remove("vista-none");
+    carritoProductos.innerHTML = "";
+    carrito.forEach((producto)=>{
+      const div = document.createElement("div");
+      div.classList.add("carrito__producto");
+      div.innerHTML = `
+        <h3>${producto.nombre}</h3>
+        <p>$${producto.precio}</p>
+        <p>Cant : ${producto.cantidad}</p>
+        <p>Subt : $${producto.precio * producto.cantidad}</p>  
+        `;
 
+        const btnSumar = document.createElement("button");
+        btnSumar.classList.add("btnCarritoSuma");
+        btnSumar.innerText = "+";
+        btnSumar.addEventListener("click",()=>{
+          sumarAlCarrito(producto); 
+        });
+        
+        const btnRestar = document.createElement("button");
+        btnRestar.classList.add("btnCarritoResta");
+        btnRestar.innerText = "-";
+        btnRestar.addEventListener("click",()=>{
+          restarDelCarrito(producto); 
+        });
+      
+        const btnAnular = document.createElement("button");
+        btnAnular.classList.add("btnCarritoCancel");
+        btnAnular.innerText = "X";
+        btnAnular.addEventListener("click",()=>{
+        borrarDelCarrito(producto); 
+        });
+      
+      div.append(btnSumar);
+      div.append(btnRestar);
+      div.append(btnAnular);
+      carritoProductos.append(div);
+    });
+  }
+  actualizarTotal();
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+//--- Funcionalidad borrar del carrito -----
+const borrarDelCarrito = (producto) =>{
+  const IndexProducto = carrito.findIndex((item) => item.nombre === producto.nombre );
+  carrito.splice(IndexProducto,1);
+  actualizarCarrito();
+}
+
+//--- Funcionalidad sumar al carrito -------
+const sumarAlCarrito = (producto) =>{
+  producto.cantidad++;
+  actualizarCarrito();
+}
+
+//--- Funcionalidad restar del carrito -------
+const restarDelCarrito = (producto) =>{
+  if(producto.cantidad == 1){
+    const btnRestarCarrito = document.querySelector(".btnCarritoResta");
+      btnRestarCarrito.addEventListener("click",()=>{
+        btnRestarCarrito.removeEventListener();
+      });
+  }
+  else{
+    producto.cantidad--;
+    actualizarCarrito();
+  }
+}
+
+//--- Funcionalidad de actualizar el total ----
+const actualizarTotal = () =>{
+  const total = carrito.reduce((acc, prod)=> acc + (prod.precio * prod.cantidad), 0);
+  carritoTotal.innerText = `$${total}`;
+}
+//--- Funcionalidad contabilizar las vueltas ---
 
 //--- Funcionalidad que imprime los productos en la vitrina. ----
 const productosEnVitrina = (data) =>{
@@ -70,6 +159,10 @@ const productosEnVitrina = (data) =>{
     document.querySelector('#vitrinaProductos').appendChild(newElemento);
   });
 }
+
+actualizarCarrito();
+
+
 
 
 
