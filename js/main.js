@@ -1,6 +1,7 @@
 let carritoLS = JSON.parse(localStorage.getItem("carrito"));
 let carrito = carritoLS || [];
 
+const tituloRetiro = document.querySelector(".titulo__retiro");
 const carritoVacio = document.querySelector("#carrito-vacio");
 const carritoProductos = document.querySelector("#carrito__productos");
 const carritoTotal =  document.querySelector("#total");
@@ -143,8 +144,56 @@ const restarDelCarrito = (producto) =>{
 const actualizarTotal = () =>{
   const total = carrito.reduce((acc, prod)=> acc + (prod.precio * prod.cantidad), 0);
   carritoTotal.innerText = `$${total}`;
+  generarVueltas(total);
 }
 //--- Funcionalidad contabilizar las vueltas ---
+
+function generarVueltas(total){
+  const btnDinero = document.querySelectorAll(".dinero");
+  btnDinero.forEach((item)=>{
+    item.addEventListener("click",()=>{
+        const alertaDePago = document.querySelector(".alertaDePago");
+        alertaDePago.innerText = "";  
+        const valorBtn = item.value;
+        btnPagar(valorBtn, total)
+    });
+  });
+} 
+
+//--- Funcionalidad del boton pagar ------
+// Una vez se identifique que el valor que tengo que pagar es menor al valor de los fondos que tengo disponible, en ese instante el boton pagar se pone en verde y habilitandome para el pago de los productos.
+const btnPagar = (valorBtn, total) =>{
+  const btnPago = document.querySelector(".btnPago");
+  const valorVueltas = document.querySelector(".valorVueltas");
+  
+  if(valorBtn >= total){
+    btnPago.classList.add("btnPago--green");
+    btnPago.classList.remove("btnPago--red");
+    btnPago.addEventListener("click",()=>{
+      const vueltas = (valorBtn - total);
+      valorVueltas.innerText = `$${vueltas}`;
+      tituloRetiro.innerText = "Retire aquí";
+      btnPago.classList.remove("btnPago--none");
+    });
+    resetVueltas();
+  }
+  else{
+    btnPago.classList.remove("btnPago--green");
+    btnPago.classList.add("btnPago--red");
+    const alertaDePago = document.querySelector(".alertaDePago");
+    alertaDePago.innerText = "⚠️ Fondos insuficientes, agrega fondos a la tarjeta ⚠️"
+    btnPago.classList.add("btnPago--none");
+    valorVueltas.innerText = "$0";
+  }
+} 
+
+//--- Funcionalidad retiro producto -----
+// cuando le de click sobre el texto que dice retire aquí, en ese momento de resetea el
+// valor de las vueltas
+tituloRetiro.addEventListener("click",()=>{
+  const valorVueltas = document.querySelector(".valorVueltas");
+        valorVueltas.innerText = "$00";
+});
 
 //--- Funcionalidad que imprime los productos en la vitrina. ----
 const productosEnVitrina = (data) =>{
