@@ -45,6 +45,16 @@ fetch(PRODUCTOS_URL)
                   //btnAgregar.addEventListener("click",()=>{
                   const btnAgregarCarrito = () =>{
                       carrito.push({...producto , cantidad: 1});
+
+                      Toastify({
+                        text: "Se agrego al producto al carrito",
+                        gravity:"bottom",
+                        // className: "info",
+                        style: {
+                          background: "linear-gradient(to right, #00b09b, #96c93d)",
+                        }
+                      }).showToast();
+
                       actualizarCarrito();
                       
                     btnAgregar.removeEventListener('click', btnAgregarCarrito);
@@ -117,6 +127,14 @@ function actualizarCarrito(){
 const borrarDelCarrito = (producto) =>{
   const IndexProducto = carrito.findIndex((item) => item.nombre === producto.nombre );
   carrito.splice(IndexProducto,1);
+  Toastify({
+    text: "Se elimino un producto del carrito",
+    gravity:"bottom",
+    // className: "info",
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    }
+  }).showToast();
   actualizarCarrito();
 }
 
@@ -166,16 +184,59 @@ const btnPagar = (valorBtn, total) =>{
   const btnPago = document.querySelector(".btnPago");
   const valorVueltas = document.querySelector(".valorVueltas");
   
-  if(valorBtn >= total){
+  if(valorBtn > total){
     btnPago.classList.add("btnPago--green");
     btnPago.classList.remove("btnPago--red");
     btnPago.addEventListener("click",()=>{
       const vueltas = (valorBtn - total);
       valorVueltas.innerText = `$${vueltas}`;
+      Toastify({
+        text: "Retire las vueltas",
+        gravity:"bottom",
+        duration: 2000,
+        // className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
       tituloRetiro.innerText = "Retire aquí";
+      Toastify({
+        text: "Retire su producto",
+        gravity:"bottom",
+        duration: 4000,
+        // className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
       btnPago.classList.remove("btnPago--none");
     });
     resetVueltas();
+  } if(valorBtn == total){
+    btnPago.classList.add("btnPago--green");
+    btnPago.classList.remove("btnPago--red");
+    btnPago.addEventListener("click",()=>{
+      const vueltas = (valorBtn - total);
+      valorVueltas.innerText = `$${vueltas}`;
+      Toastify({
+        text: "Los fondos ingresados son igual al valor de la compra, no hay vueltos",
+        gravity:"bottom",
+        // className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+      tituloRetiro.innerText = "Retire aquí";
+      Toastify({
+        text: "Retire su producto",
+        gravity:"bottom",
+        // className: "info",
+        style: {
+          background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+      }).showToast();
+      btnPago.classList.remove("btnPago--none");
+    });
   }
   else{
     btnPago.classList.remove("btnPago--green");
@@ -193,6 +254,14 @@ const btnPagar = (valorBtn, total) =>{
 tituloRetiro.addEventListener("click",()=>{
   const valorVueltas = document.querySelector(".valorVueltas");
         valorVueltas.innerText = "$00";
+        Toastify({
+          text: "Producto retirado, gracias por la compra",
+          gravity:"bottom",
+          // className: "info",
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          }
+        }).showToast();
 });
 
 //--- Funcionalidad que imprime los productos en la vitrina. ----
