@@ -1,0 +1,83 @@
+[
+  {
+    "codigo": 1,
+    "nombre": "Coca-Cola",
+    "presentacion": "400ml",
+    "precio": 2000,
+    "img": "../img/coca400ml.png",
+    "categoria": "Bebidas con gas"
+  },
+  {
+    "codigo": 2,
+    "nombre": "Doritos",
+    "presentacion": "200gr",
+    "precio": 2200,
+    "img": "../img/doritos.png",
+    "categoria": "Frituras"
+  },
+  {
+    "codigo": 3,
+    "nombre": "Hit",
+    "presentacion": "500ml",
+    "precio": 2800,
+    "img": "../img/hit.png",
+    "categoria": "Jugos"
+  },
+  {
+    "codigo": 4,
+    "nombre": "Papas de pollo",
+    "presentacion": "105gr",
+    "precio": 3500,
+    "img": "../img/papasPollo.png",
+    "categoria": "Frituras"
+  },
+  {
+    "codigo": 5,
+    "nombre": "De Todito",
+    "presentacion": "Natural 400gr",
+    "precio": 5000,
+    "img": "../img/toditoNatural.png",
+    "categoria": "Frituras"
+  },
+  {
+    "codigo": 6,
+    "nombre": "Coca-Cola",
+    "presentacion": "3litros",
+    "precio": 8000,
+    "img": "../img/coca3litros.png",
+    "categoria": "Bebidas con gas"
+  },
+  {
+    "codigo": 7,
+    "nombre": "Papas Churrasco",
+    "presentacion": "110gr",
+    "precio": 4000,
+    "img": "../img/papasChurrasco.png",
+    "categoria": "Frituras"
+  },
+  {
+    "codigo": 8,
+    "nombre": "Agua con gas",
+    "presentacion": "600ml",
+    "precio": 3000,
+    "img": "../img/aguaConGas.png",
+    "categoria": "Bebidas con gas"
+  },
+  {
+    "codigo": 9,
+    "nombre": "Agua sin gas",
+    "presentacion": "600ml",
+    "precio": 2500,
+    "img": "../img/aguaSinGas.png",
+    "categoria": "Bebidas sin gas"
+  },
+  {
+    "codigo": 10,
+    "nombre": "Cheese tris",
+    "presentacion": "93gr",
+    "precio": 5000,
+    "img": "../img/CheeseTris.png",
+    "categoria": "Frituras"
+  }
+  
+]

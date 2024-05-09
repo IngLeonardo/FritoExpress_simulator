@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link rel="stylesheet" href="./css/main.css">
   <title>FritoExpress</title>
 </head>
@@ -11,73 +13,79 @@
     <h1 class="titulo">FritoExpress</h1>
     <div class="contenedor__contenido">
       <section class="vitrinaProductos" id="vitrinaProductos">
-        <div id="casilla__producto">producto1</div>
-        <div id="casilla__producto">producto2</div>
-        <div id="casilla__producto">producto3</div>
-        <div id="casilla__producto">producto4</div>
-        <div id="casilla__producto">producto5</div>
-        <div id="casilla__producto">producto6</div>
+        <!-- Los <div> de esta section se crean dinamicamente con JS -->
+        
       </section>
       <div class="contenedor__tablero">
         <section class="tablero">
-          <div class="buscador">
+          <!-- <div class="buscador">
             <button class="descuento">Ver descuentos</button>
             <input type="text" class="inputtext"><button class="btnBuscar">Buscar</button>
-          </div>
+          </div> -->
           <div class="display">
             <div class="display__top">
-              <img src="https://placehold.co/150x200" alt="">
+              <div class="imgProdSeleccionado">
+                <figure class="figure__imgProdSeleccionado">
+                  <img src="https://placehold.co/150x200" alt="" class="img__displayTop" />
+                </figure>
+                
+              </div>
               <div class="descripcion__producto">
-                <label for="">codigo</label>
-                <label for="">nombre</label>
-                <label for="">presentacion</label>
-                <label for="">precio</label>
-                <label for="">cantidad</label>
+                <!-- Esta seccion se crea dinamicamente con JS -->
               </div>
               <div class="contenedor__teclado">
                 <div class="display__teclado">
-                  <button id="tecla">1</button>
-                  <button id="tecla">2</button>
-                  <button id="tecla">3</button>
-                  <button id="tecla">4</button>
-                  <button id="tecla">5</button>
-                  <button id="tecla">6</button>
-                  <button id="tecla">7</button>
-                  <button id="tecla">8</button>
-                  <button id="tecla">9</button>
-                  <button id="tecla">0</button>
-                  <button id="tecla">OK</button>
+                  <button class="btnCodigo">1</button>
+                  <button class="btnCodigo">2</button>
+                  <button class="btnCodigo">3</button>
+                  <button class="btnCodigo">4</button>
+                  <button class="btnCodigo">5</button>
+                  <button class="btnCodigo">6</button>
+                  <button class="btnCodigo">7</button>
+                  <button class="btnCodigo">8</button>
+                  <button class="btnCodigo">9</button>
+                  <button class="btnCodigo">10</button>
+                  <button id="agregar">Agregar</button>
                 </div>
               </div>
             </div>
           </div>
         </section>
-        <div class="display___bottom">
-          <button class="controls">-</button>
-          <button class="controls">+</button>
-          <button class="controls">Agregar</button>
-        </div>
-        <section class="carrito">
-          <div class="carrito__cantidades">
-            <span>prod: </span>
-            <span>cant:</span>
-            <span>sub:</span> 
-            <span>total:</span>
-            <button>X</button>
+        <section class="container__carrito">
+          <h3 class="carrito__titulo">Carrito de compra</h3>
+          <div class="carrito">
+            <div class="carrito__producto" id="carrito-vacio">
+              <h4> Carrito esta vacío.🛒</h4>
+            </div>
+            <div class="carrito__productos vista-none" id="carrito__productos">
+              <!-- Esta seccion se genera dinamicamente con JS -->
+            </div>
+            <div class="carrito__total">
+              <h2>Total: <span id="total">0</span></h2>
+            </div>
           </div>
         </section>
         <section class="sectionPago">
+          <button class="dinero" value="10000">$10k</button>
+          <button class="dinero" value="20000">$20k</button>
+          <button class="dinero" value="50000">$50k</button>
+          <button class="dinero" value="100000">$100k</button>
           <button class="btnPago">Pagar</button>
         </section>
+        <h3 class="alertaDePago"></h3>
       </div>
     </div>
     <section class="contenedor__despacho">
       <div class="dispensadora">
-        <div class="manija__dispensador"></div>
+        <div class="tapa__dispensador">
+          <div class="manija__dispensador"></div>
+          <span class="titulo__retiro"></span>
+        </div>
+        
       </div>
-    <div>
-      <label for="">Vueltas</label>
-      <label for="">$00</label>
+    <div class="vueltas">
+      <label for="" class="tituloVueltas">Vueltas</label>
+      <label for="" class="valorVueltas">$00</label>  
     </div>
     </section>
   </main>
@@ -89,7 +97,10 @@
   
 
   <!-- Scripts JS -->
-  <script src="./js/calcular.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="./js/main.js"></script>
 </body>
 </html>
 
