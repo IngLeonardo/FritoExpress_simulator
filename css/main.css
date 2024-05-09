@@ -277,6 +277,8 @@ label{
   width: 8rem;
   font-size: 16px;
   border: none;
+  background-color: var(--color-base);
+  color: var(--color-quinto);
 }
 .btnPago--none{
   pointer-events: none;
@@ -293,6 +295,11 @@ label{
   height: 45px;
   font-weight: 600;
   border-radius: 50%;
+  border: 0;
+}
+.btnDinero--seleccion{
+  background-color: var(--color-primero);
+  color: var(--color-base);
 }
 
 .contenedor__despacho{

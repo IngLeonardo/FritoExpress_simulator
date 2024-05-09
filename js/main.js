@@ -1,12 +1,19 @@
 let carritoLS = JSON.parse(localStorage.getItem("carrito"));
 let carrito = carritoLS || [];
 
+const iva = 0.19;
+const iup = 0.15;
+const figure__imgProducto = document.querySelector(".figure__imgProdSeleccionado");
 const tituloRetiro = document.querySelector(".titulo__retiro");
 const carritoVacio = document.querySelector("#carrito-vacio");
 const carritoProductos = document.querySelector("#carrito__productos");
+const carritoSubTotal =  document.querySelector("#subTotal");
 const carritoTotal =  document.querySelector("#total");
 const PRODUCTOS_URL = "../data/productos.json";
 const btnCodigo = document.querySelectorAll(".btnCodigo");
+const btnPago = document.querySelector(".btnPago");
+const valorVueltas = document.querySelector(".valorVueltas");
+const btnDinero = document.querySelectorAll(".dinero");
 const newElementoDescrip = document.createElement("div");
       newElementoDescrip.id= "detalle__producto";
       newElementoDescrip.className = "detalle__producto";
@@ -23,10 +30,10 @@ fetch(PRODUCTOS_URL)
     btnCodigo.forEach((boton)=>{
       // boton.addEventListener("click",()=>{
       const eventBtn = ()=>{
-        const valorBtn = boton.textContent
+        const valorBtnFondos = boton.textContent
         productos.forEach((producto)=>{
           
-          if(valorBtn == producto.codigo){
+          if(valorBtnFondos == producto.codigo){
 
             //--- Renderiza el producto segun el numero de producto seleccionado
             const imgDisplayTop = document.querySelector(".img__displayTop");
@@ -48,7 +55,7 @@ fetch(PRODUCTOS_URL)
 
                       Toastify({
                         text: "Se agrego al producto al carrito",
-                        gravity:"bottom",
+                        gravity:"top",
                         // className: "info",
                         style: {
                           background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -129,7 +136,7 @@ const borrarDelCarrito = (producto) =>{
   carrito.splice(IndexProducto,1);
   Toastify({
     text: "Se elimino un producto del carrito",
-    gravity:"bottom",
+    gravity:"top",
     // className: "info",
     style: {
       background: "linear-gradient(to right, #00b09b, #96c93d)",
@@ -146,87 +153,101 @@ const sumarAlCarrito = (producto) =>{
 
 //--- Funcionalidad restar del carrito -------
 const restarDelCarrito = (producto) =>{
+
   if(producto.cantidad == 1){
-    const btnRestarCarrito = document.querySelector(".btnCarritoResta");
-      btnRestarCarrito.addEventListener("click",()=>{
-        btnRestarCarrito.removeEventListener();
-      });
+    Toastify({
+      text: "La cantidad no pueden ser menor a 1",
+      gravity:"top",
+      // className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
   }
   else{
     producto.cantidad--;
     actualizarCarrito();
   }
 }
-
 //--- Funcionalidad de actualizar el total ----
 const actualizarTotal = () =>{
-  const total = carrito.reduce((acc, prod)=> acc + (prod.precio * prod.cantidad), 0);
+  
+  const subtotal = carrito.reduce((acc, prod)=> acc + (prod.precio * prod.cantidad), 0);
+
+  let ivaProducto =  subtotal * iva;
+  let impuestoProducto = subtotal * iup;
+  let total = Math.ceil((subtotal + ivaProducto + impuestoProducto)/100)*100;
   carritoTotal.innerText = `$${total}`;
-  generarVueltas(total);
+  generarVueltas(total,subtotal);
 }
 //--- Funcionalidad contabilizar las vueltas ---
-
-function generarVueltas(total){
-  const btnDinero = document.querySelectorAll(".dinero");
+function generarVueltas(total,subtotal){
   btnDinero.forEach((item)=>{
     item.addEventListener("click",()=>{
+      
+      // btnDinero.forEach((removeClass)=>{
+      //   removeClass.classList.remove("btnDinero--seleccion");
+      // });
+      // item.classList.add("btnDinero--seleccion");
         const alertaDePago = document.querySelector(".alertaDePago");
         alertaDePago.innerText = "";  
-        const valorBtn = item.value;
-        btnPagar(valorBtn, total)
+        const valorBtnFondos = item.value;
+        btnPagar(valorBtnFondos, total,subtotal)
     });
   });
 } 
 
 //--- Funcionalidad del boton pagar ------
-// Una vez se identifique que el valor que tengo que pagar es menor al valor de los fondos que tengo disponible, en ese instante el boton pagar se pone en verde y habilitandome para el pago de los productos.
-const btnPagar = (valorBtn, total) =>{
-  const btnPago = document.querySelector(".btnPago");
-  const valorVueltas = document.querySelector(".valorVueltas");
+// Una vez se identifique que el valor que tengo que pagar es menor al valor de los fondos que tengo disponible, en ese instante el boton pagar se pone en verde y se habilita para el pago de los productos.
+const btnPagar = (valorBtnFondos,total,subtotal) =>{
   
-  if(valorBtn > total){
+  if(carrito.length === 0){
+    btnPago.classList.remove("btnPago--green");
+    // btnPago.classList.add("btnPago--none");
+    Toastify({
+      text: "No tienes productos en tu carrito de compras",
+      gravity:"top",
+      duration: 3000,
+      // className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
+  }
+  else if(valorBtnFondos > total){
     btnPago.classList.add("btnPago--green");
     btnPago.classList.remove("btnPago--red");
     btnPago.addEventListener("click",()=>{
-      const vueltas = (valorBtn - total);
+      console.log("Fondos :",valorBtnFondos);
+      console.log("Total :",total);
+      const vueltas = (valorBtnFondos - total);
+      console.log("Vueltas :",vueltas);
       valorVueltas.innerText = `$${vueltas}`;
-      Toastify({
-        text: "Retire las vueltas",
-        gravity:"bottom",
-        duration: 2000,
-        // className: "info",
-        style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-      }).showToast();
-      tituloRetiro.innerText = "Retire aquí";
-      Toastify({
-        text: "Retire su producto",
-        gravity:"bottom",
-        duration: 4000,
-        // className: "info",
-        style: {
-          background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-      }).showToast();
+
+      diseñoFactura(valorBtnFondos,total,subtotal);
+
+      tituloRetiro.innerText = "Clic aquí para retirar";
       btnPago.classList.remove("btnPago--none");
+
     });
-    resetVueltas();
-  } if(valorBtn == total){
+
+  }
+  else if(valorBtnFondos == total){
     btnPago.classList.add("btnPago--green");
     btnPago.classList.remove("btnPago--red");
     btnPago.addEventListener("click",()=>{
-      const vueltas = (valorBtn - total);
+      const vueltas = (valorBtnFondos - total);
       valorVueltas.innerText = `$${vueltas}`;
       Toastify({
         text: "Los fondos ingresados son igual al valor de la compra, no hay vueltos",
-        gravity:"bottom",
+        gravity:"top",
         // className: "info",
         style: {
           background: "linear-gradient(to right, #00b09b, #96c93d)",
         }
       }).showToast();
       tituloRetiro.innerText = "Retire aquí";
+      diseñoFactura(valorBtnFondos,total,subtotal);
       Toastify({
         text: "Retire su producto",
         gravity:"bottom",
@@ -235,6 +256,8 @@ const btnPagar = (valorBtn, total) =>{
           background: "linear-gradient(to right, #00b09b, #96c93d)",
         }
       }).showToast();
+
+      tituloRetiro.innerText = "Clic aquí para retirar";
       btnPago.classList.remove("btnPago--none");
     });
   }
@@ -249,20 +272,96 @@ const btnPagar = (valorBtn, total) =>{
 } 
 
 //--- Funcionalidad retiro producto -----
-// cuando le de click sobre el texto que dice retire aquí, en ese momento de resetea el
+// cuando le de clic sobre el texto que dice retire aquí, en ese momento de resetea el
 // valor de las vueltas
 tituloRetiro.addEventListener("click",()=>{
   const valorVueltas = document.querySelector(".valorVueltas");
         valorVueltas.innerText = "$00";
-        Toastify({
-          text: "Producto retirado, gracias por la compra",
-          gravity:"bottom",
-          // className: "info",
-          style: {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
+
+        Swal.fire({
+          title: "Producto retirado, gracias por su compra",
+          showConfirmButton: true,
+          
+          confirmButttonText: "Aceptar",
+          showClass: {
+            popup: `
+              animate__animated
+              animate__fadeInUp
+              animate__faster
+            `
+          },
+          hideClass: {
+            popup: `
+              animate__animated
+              animate__fadeOutDown
+              animate__faster
+            `
           }
-        }).showToast();
+        }).then((result)=>{
+            if(result.isConfirmed){
+              carrito.length = 0;
+              actualizarCarrito();
+              btnPago.classList.remove("btnPago--green");
+              tituloRetiro.innerText = "";
+              figure__imgProducto.innerHTML = `
+              <img src="https://placehold.co/150x200" alt="" class="img__displayTop" />
+              `;
+              newElementoDescrip.innerHTML = "";
+            }
+        });
+    
 });
+
+//--- Diseño de la factura ----
+const diseñoFactura = (valorBtnFondos,total,subtotal)=>{
+  carrito.forEach((prod)=>{
+    Swal.fire({
+    
+      title: "<h2>Factura de compra</h2>",
+      icon: "info",
+      imageHeight: 1500,
+      imageAlt: "A tall image",
+      
+      html: `
+        <p>Nombre producto :${prod.nombre}</p>
+        <p>Presentación :   ${prod.presentacion}</p>
+        <p>Cantidad :       ${prod.cantidad}</p>
+        <p>Precio Unid :    $${prod.precio}</p>
+        <p>IVA :            ${iva}%</p>
+        <p>IUP :            ${iup}%</p>
+        <hr></hr>
+        <h3>Subtotal :       $${subtotal}</h3>
+        <h2>Total :       $${total}</h2>
+        <h2>Vueltas  :       $${(valorBtnFondos-total)}</h2>
+        
+        <a href="#">Link</a>,
+          Imprimir factura
+      `,
+      
+      showCloseButton: true,
+      showCancelButton: false,
+      focusConfirm: true,
+      confirmButtonText: `
+        <i class="fa fa-thumbs-up"></i> Aceptar!
+      `
+    
+    }).then((resp)=>{
+      if(resp.isConfirmed){
+        
+        Swal.fire({
+          position: "center-center",
+          icon: "success",
+          title: `<h2>Compra exitosa</h2>
+                  <p>Retire su producto</p>
+                  <p>⬇️</p>`,
+          showConfirmButton: false,
+          timer: 2500
+        });
+      }
+    })
+  })
+}
+
 
 //--- Funcionalidad que imprime los productos en la vitrina. ----
 const productosEnVitrina = (data) =>{
@@ -280,15 +379,7 @@ const productosEnVitrina = (data) =>{
 
 actualizarCarrito();
 
-
-
-
-
-
-
-// Debo verme las clases de operadores avanzados II 
-// y la clase de after3 para saber implementar lo visto
-
+//--- Temas aplicados ---
 // condicionales
 // ciclos
 // funciones
